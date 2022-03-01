@@ -9,10 +9,10 @@ class Ip:
             >>> a.mask
             24
         '''
-        self.cidr = cidr
-        ip = cidr.split("/")
-        self.addr =ip[0]
+        self.addr, mask = cidr.split("/")
+        self.mask = int(mask)
         
+    
     def getAddrBytes(self):
         '''
             @tests :
@@ -20,9 +20,8 @@ class Ip:
             >>> a.getAddrBytes()
             [192, 168, 53, 1]
         '''
-        ip = list(map(int(self.cidr.split(".")))
+        return list(map(int, self.cidr.split(".")))
         
-    
     def getMaskBytes(self):
         '''
             @tests :
@@ -33,8 +32,12 @@ class Ip:
             >>> b.getMaskBytes()
             [255, 255, 192, 0]
         '''
-        
-    
+        S = self.mask*'1' + (32-self.mask)*'0'
+        o1 = S[0;8]
+        o2 = S[8;16]
+        o3 = S[16;24]
+        o4 = S[24;32]
+        return [int(o1,2), int(o2,2), int(o3,2), int(o4,2)]
     def getNetworkBytes(self):
         '''
             @tests :
@@ -45,7 +48,7 @@ class Ip:
             >>> b.getNetworkBytes()
             [91, 198, 160, 0]
         '''
-        pass
+        
         
     def getHostBytes(self):
         '''
